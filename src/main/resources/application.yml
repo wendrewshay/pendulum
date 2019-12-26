@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: pendulum
+  profiles:
+    active: test
+server:
+  port: 8899

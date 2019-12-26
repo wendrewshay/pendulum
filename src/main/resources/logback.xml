@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds" packagingData="false">
+     <property name="USER_HOME" value="." />
+
+    <timestamp key="byMonth" datePattern="yyyyMM"/>
+    <timestamp key="byDay" datePattern="yyyy-MM-dd"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- 根据时间戳属性将文件按月按日分开管理 -->
+        <file>${user.dir}/logs/${byMonth}/${byDay}.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-36.36thread] [%-5level] [%-36.36logger{36}:%-4.4line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-36.36thread] [%-5level] [%-36.36logger{36}:%-4.4line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 输出com.fy包及其子包下的日志到文件，如果加了additivity="false"，只会输出到文件，不会输出到其它父级appender -->
+    <logger name="com.eavescat.pendulum" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <!-- 输出所有日志到控制台 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
